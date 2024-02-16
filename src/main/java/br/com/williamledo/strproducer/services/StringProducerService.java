@@ -18,20 +18,24 @@ public class StringProducerService {
  
     public void sendMessage(String message) {
  
-        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send("str-topic", message);
- 
-        future.whenComplete((result, ex) -> {
-        	
-            if (ex != null) {
-                log.error("Error sending message: {}", ex.getMessage());
-                return;
-            }
-            
-            log.info("Send message with success: {}", result.getProducerRecord().value());
-            log.info("Partition {}, Offset {}",
-                     result.getRecordMetadata().partition(),
-                     result.getRecordMetadata().offset()
-            );
-        });
+    	log.info("Send message {}", message);
+    	
+    	kafkaTemplate.send("str-topic", message);
+    	
+//        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send("str-topic", message);
+// 
+//        future.whenComplete((result, ex) -> {
+//        	
+//            if (ex != null) {
+//                log.error("Error sending message: {}", ex.getMessage());
+//                return;
+//            }
+//            
+//            log.info("Send message with success: {}", result.getProducerRecord().value());
+//            log.info("Partition {}, Offset {}",
+//                     result.getRecordMetadata().partition(),
+//                     result.getRecordMetadata().offset()
+//            );
+//        });
     }
 }
